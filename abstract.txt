@@ -1,0 +1,14 @@
+Teaching Riemann Sums and Multiple Integration with Messy Data
+
+When introducing multiple integrals in multivariable calculus, many curricula pay only cursory attention to the definition as a limit of Riemann sums before moving on to iterated integrals, leaving some students to think there is no distinction. When students are asked to estimate integrals from discrete data, it is often given in neat-as-a-pin tabular form and the exercise reduces to the proverbial "plug-and-chug" variety. 
+
+In this lesson, students work alone or, preferably, in small groups, through a Jupyter notebook using an accompanying data set, with the goal of answering a simple question, "What is the average temperature in the room?" Importantly the samples are not uniformly distributed nor arranged in a sensible order. 
+
+The chief learning objectives are to appreciate the structure of a Riemann sum and to understand triple integrals as measuring more than just volumes. Along the way, students develop skills in data visualization, data wrangling, and the mechanics of indexing. 
+
+The exercises are scaffolded to produce a reasonable result, but as the data are sampled from a specific continuous distribution, there is a "real" answer which students can compete to obtain by refining their methods in an open-ended exploration.  
+
+---Try 2---
+
+When introducing multiple integration, many multivariable calculus curricula give cursory attention to the Riemann sum definition before moving on to iterated integrals. When students are asked to estimate integrals from discrete data, it is often received in neat-as-a-pin tabular form, and the exercise reduces to the "plug-and-chug" variety. In this lesson, students are presented with a simple question, "What is the average temperature in this freezer?" and an unwieldy, nonuniform data set of sampled temperatures.  
+Students work through a Jupyter notebook and come to see that a Riemann sum structure yields a better answer than a simple column average. The lesson is scaffolded such that all students can get a decent result. Along the way, they develop basic skills in data wrangling, data visualization, and the mechanics of indexing. Finally, as the data are sampled from a specific continuous distribution, the students can compete to get closest to the "real" answer, debate the actual fairness of said competition, and find hooks to more advanced topics in numeric integration and regression. 

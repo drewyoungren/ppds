@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Riemann Sums and Multiple Integration</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/sky.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!-- Card flip -->
+		<style type="text/css">
+			.card {
+				width: 1152px;
+				height: 360px;
+				background: url("fdots1.png") no-repeat;
+				display: inline-block;
+			}
+			.card:hover {
+				background: url("fdots2.png") no-repeat;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<section 
+					data-background='rs.png' 
+					data-background-size="100%" 
+					data-background-opacity='.1' 
+					data-background-transform='rotate(30deg)'>
+					<h2><center>Teaching Riemann Sums and Multiple Integration with Messy Data</center></h2>
+					<div align='right'>Drew Youngren</div>
+					<div align='right'>Columbia University</div>
+					<div align='right'><a href="http://drew.youngren.nyc/ppds"><code>http://drew.youngren.nyc/ppds</code></a></div>
+				</section>
+				<section 
+					data-background='rs.png' 
+					data-background-size="100%" 
+					data-background-opacity='.1' 
+					data-background-transform='rotate(30deg)'>
+					<p> with many contributions and insight from my student</p>
+
+					<h4>Evan Tilley</h4>
+				</section>
+			</section>
+				<section>
+					<section>
+						<h2>The Problem</h2>
+						<p class="fragment">Students don't know what an integral is. 
+							$$ \iiint_E f \,dV$$
+						</p>
+
+						<aside class="notes">
+							<ul>
+								<li>Some say 0.</li>
+								<li>Some say positive, but can't come up with an estimate. </li>
+								<li>They are not "walking around the region of integration and imagining the value of the function there. </li>
+							</ul>
+						</aside>
+					</section>
+					<section><h3>Diagnostic</h3>
+						<figure style='float: right; pad: 5px'><iframe src="https://www.monroecc.edu/faculty/paulseeburger/CalcPlot3D/dynamicFigure/?type=implicit;equation=x^2+y^2+z^2~1;cubes=25;visible=true;fixdomain=true;xmin=-1.5;xmax=1.5;ymin=-1.5;ymax=1.5;zmin=-1.5;zmax=1.5;alpha=255;format=normal;constcol=rgb(255,0,0)&type=window;hsrmode=3;nomidpts=false;anaglyph=-1;center=8.236391035463319,4.755282581475766,3.0901699437494745,1;focus=0,0,0,1;up=0,0,2,1;transparent=false;alpha=140;twoviews=false;unlinkviews=false;axisextension=0.7;xaxislabel=x;yaxislabel=y;zaxislabel=z;edgeson=true;faceson=true;showbox=false;showaxes=true;showticks=false;perspective=true;centerxpercent=0.5;centerypercent=0.5;rotationsteps=30;autospin=true;xygrid=true;yzgrid=false;xzgrid=false;gridsonbox=false;gridplanes=false;gridcolor=rgb(128,128,128);xmin=-2;xmax=2;ymin=-2;ymax=2;zmin=-2;zmax=2;xscale=1;yscale=1;zscale=1;zcmin=-4;zcmax=4;zoom=1.034667;xscalefactor=1;yscalefactor=1;zscalefactor=1" frameborder="0" height=400 width =400></iframe><figcaption style="font-size: 15px">Plot via <a href="https://www.monroecc.edu/faculty/paulseeburger/CalcPlot3D/">CalcPlot3D</a></figcaption></figure>
+					<p>Let $E$ be the solid ball $x^2 +y^2 +z^2 \leq 1$.</p>
+					<p>Estimate the triple integral $$\iiint_E x^2 \,dV$$ </p>
+
+					</section>
+				</section>
+				<section>
+					<h2>Typical Exercise</h2>
+					<p align='left' style="font-size:60%">A 20-ft-by-30-ft swimming pool is filled with water. The depth is measured at 5-ft intervals, starting at one corner of the pool, and the values are recorded in the table. Estimate the volume of water in the pool.</p>
+
+					<table>
+						<thead>
+							<tr>
+								<td style='border-right: thin solid'>&nbsp</td>
+								<td>0</td>
+								<td>5</td>
+								<td>10</td>
+								<td>15</td>
+								<td>20</td>
+								<td>25</td>
+								<td>30</td>
+							</tr>
+						</thead>
+						<tr>
+							<td style='border-right: thin solid'>0</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>6</td>
+							<td>7</td>
+							<td>8</td>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td style='border-right: thin solid'>5</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>7</td>
+							<td>8</td>
+							<td>10</td>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td style='border-right: thin solid'>10</td>
+							<td>2</td>
+							<td>4</td>
+							<td>6</td>
+							<td>8</td>
+							<td>10</td>
+							<td>12</td>
+							<td>10</td>
+						</tr>
+						<tr>
+							<td style='border-right: thin solid'>15</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>5</td>
+							<td>6</td>
+							<td>8</td>
+							<td>7</td>
+						</tr>
+						<tr>
+							<td style='border-right: thin solid'>20</td>
+							<td>2</td>
+							<td>2</td>
+							<td>2</td>
+							<td>2</td>
+							<td>3</td>
+							<td>4</td>
+							<td>4</td>
+						</tr>
+				</table>
+
+				<p align='right' style="font-size:40%">Stewart, J. <i>Calculus: Early Transcendentals</i>. 8th Edition.</p>
+				</section>
+				<section>
+						<h3>Where did <span class="fragment step-fade-in-then-out">messy</span> <span class="fragment step-fade-in-then-out">bulls***</span> data enter the picture?</h3>
+				</section>
+				<section>
+					<section>
+						<figure style='float: right; pad: 5px'>
+								<img src="dots.png" alt="3D scatterplot of data." width = "35%">
+							</figure>
+							<p style="font-size: .6em"><b>Exercise.</b> In the following data set, temperature (in $^\circ$F) is taken at a number of points in a $3\text{m}\times 2\text{m}\times 2\text{m}$ walk-in freezer.  $x$, $y$, and $z$ measure distance (in cm) from the west wall, south wall, and floor, respectively. $T$ is the temperature at the corresponding point. </p>
+							
+							<p style="font-size: .6em">Use the data to estimate the average temperature in the room using a Riemann sum with $\Delta V = 1 \text{m}^3$ (<i>Your sum will have 12 terms</i>). </p>
+							
+							<p style="font-size: .6em">Would you get a better answer by simply averaging all the $T$ values? Why or why not?</p>
+						</section>
+						
+						<section>
+							<p>
+								<img src="data-table.png" alt="Screenshot of x-y-z-T data table.">
+							</p>
+						</section>
+				</section>
+				<section>
+					<h3>What has it become?</h3>
+					<ul>
+						<li class="fragment">A "lab" 
+							<ul>
+								<li>50-minute recitation with graduate TA</li>
+								<li>finished over a weekend</li>
+							</ul>
+						</li>
+						<li class="fragment">Jupyter notebooks</li>
+						<li class="fragment">SciPy stack</li>
+						<li class="fragment">nbgrader format</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>Part 1</h2>
+						
+						<p>Implement various rules for computing Riemann sums over rectangular regions of integration</p>
+						
+						<pre class="python"><code class="hljs">
+def northeast_rule(f,a,b,c,d,n):
+	'''An approximation of the integral of f over domain (a,b) x (c,d) by n^2 rectangles 
+	using the upper-right corner as the sample point.'''
+	dx = (b-a) / n
+	dy = (d-c) / n
+	return sum([f(a + i * dx,c + j * dy) for i in range(1,n+1) for j in range(1,n+1)])*dx*dy
+						</code></pre>
+					</section>
+					<section>
+						<h4>Learning Objectives</h4>
+						<ul>
+							<li>
+								Essentials
+								<ul>
+									<li class="fragment">Connect the parts of a Riemann sum to the parts of a multiple integral</li>
+									<li class="fragment">Hone indexing skills</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Extensions
+								<ul>
+									<li class="fragment">Implement 2-D trapezoid rule</li>
+									<li class="fragment">Numerical integration $\displaystyle \longleftrightarrow \sum_i w_i\,f(\mathbf{x}_i)$</li>
+								</ul>
+							</li>
+							<li class="fragment">
+								Rabbit Holes
+								<ul>
+									<li>How does <code>scipy.integrate.dblquad</code> work?</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section><h2>Part 2</h2>
+
+						<p>Explore the unknown (function values)</p>
+
+						<pre class="python"><code class="hljs">
+from part2 import f # no peeking!
+						</code></pre>
+						<figure style="float: bottom;"><img src="f2dgraph.png" alt="density plot of an unknown function f(x,y)"></figure>
+
+					</section>
+					<section>
+							<h3>Learning Objectives</h3>
+							<ul>
+								<li>Essentials
+								<ul>
+									<li class="fragment">2D graphical representations</li>
+									<li class="fragment">Reading/filtering dataframes</li>
+								</ul>
+							</li>
+							<li class="fragment">Extensions
+								<ul>
+									<li class="fragment">Nonuniform Partitions</li>
+									<li class="fragment">"Mesh Refinement"</li>
+									<li class="fragment">Importance Sampling</li>
+								</ul>
+							</li>
+							<li class="fragment">Rabbit Hole
+								<ul>
+									<li class="fragment">Discrete Geometry?</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Part 3</h2>
+						<p>Fill in the blanks.</p>
+
+						<pre class="python"><code class="hljs">
+from sklearn.neighbor import KNeighborRegressor
+						</code></pre>
+
+						<div class="card"></div>
+						<!-- <img src="fdots1.png" height="30%" alt="animation of Voronoi diagram being formed"> -->
+
+					</section>
+					<section>
+						<h2>Procedure</h2>
+						<ul>
+							<li>Students step through model creation, training, and deployment on the 2D data.</li>
+							<li>Integrate the model adn compare.</li>
+							<Ii>"Competition" on the freezer data.</Ii>
+						</ul>
+					</section>
+					<section>
+						<h3>Learning Objectives</h3>
+							<ul>
+								<li>Essentials
+									<ul>
+										<li class="fragment">fit a simple model to data</li>
+										<li class="fragment">use the predictor</li>
+									</ul>
+								</li>
+								<li class="fragment">Extensions 
+
+									<ul>
+										<li class="fragment">Multiple neighbors/distace weighting</li>
+										<li class="fragment">Voronoi diagrams/Delaunay triangulation</li>
+									</ul>
+								</li>
+								<li class="fragment">Rabbit Hole
+									<ul>
+										<li class="fragment"><a href="https://scikit-learn.org/stable/supervised_learning.html">Supervised Learning</a></li>
+									</ul>
+								</li>
+							</ul>
+						</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					// MathJax
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
